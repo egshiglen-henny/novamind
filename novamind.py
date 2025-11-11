@@ -3,6 +3,27 @@
 
 from openai import OpenAI
 import time
+import re
+
+def validate_input(user_input):
+    # accepts - letters, numbers, spaces, common tech symbols (+, /, # etc.,)
+    # rejects - empty, whitespace strings, numbers only, emojis, random symbols, gibberish
+    
+    if not user_input or user_input.isspace():
+        return False
+    # allow letters, digits, spaces and tech symbols
+    if not re.match(r'^[A-Za-z0-9\s+/#+.]+$', user_input):
+        return False
+    
+    # reject numbers only like 1234
+    if user_input.replace(" ", "").isdigit():
+        return False
+    
+    # reject gibberish or short characters
+    if len(user_input.strip()) < 2:
+        return False
+    
+    return True
 
 def brainstorm(interests, goal):
     # set up OpenAI client
@@ -43,20 +64,25 @@ def brainstorm(interests, goal):
     
     start_time = time.time()  # start measuring
 
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[{"role": "user", "content": prompt}],
-        max_tokens=300, # maximum length of the response
-        temperature=0.7 # creativity 
-    )
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=300, # maximum length of the response
+            temperature=0.7 # creativity 
+        )
 
-    end_time = time.time()  # stop measuring
-    elapsed = end_time - start_time
+        end_time = time.time()  # stop measuring
+        elapsed = end_time - start_time
 
-    # print results
-    print("\nNovaMind's Ideas:\n")
-    print(response.choices[0].message.content)
-    # print(f"\nResponse time: {elapsed:.2f} seconds\n")
+        # print results
+        print("\nNovaMind's Ideas:\n")
+        print(response.choices[0].message.content)
+        # print(f"\nResponse time: {elapsed:.2f} seconds\n")
+
+    except Exception as e:
+        print(f"Oops! Something went wrong: {e}")
+
     
 if __name__ == "__main__":
     # greeting message
@@ -70,13 +96,13 @@ if __name__ == "__main__":
             break
 
         # validate user input
-        elif not interests.replace(" ", "").isalnum():
-            print("Please enter valid text (letters only, not numbers or symbols).")
+        if not validate_input(interests):
+            print("Please enter valid text (letters, numbers, and basic symbols like +, /, or #).")
             continue
 
         goal = input("What is your goal (e.g., build a project, learn a new skill)? ").strip()
-        if not goal.replace(" ", "").isalnum():
-            print("Please enter valid text (letters only, not numbers or symbols).")
+        if not validate_input(goal):
+            print("Please enter valid text (letters, numbers, and basic symbols like +, /, or #).")
             continue
 
         # run brainstorm function
