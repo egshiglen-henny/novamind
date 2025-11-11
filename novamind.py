@@ -11,15 +11,26 @@ def validate_input(user_input):
     
     if not user_input or user_input.isspace():
         return False
+    
     # allow letters, digits, spaces and tech symbols
-    if not re.match(r'^[A-Za-z0-9\s+/#+.]+$', user_input):
+    if not re.match(r'^[A-Za-z0-9\s+/#+.&\-_]+$', user_input):
         return False
     
+    # reject gibberish pattern
+    letters_only = user_input.replace(" ", "").isalpha()
+    if letters_only:
+        # too long and no spaces (might be gibberish like adsfjkhaf)
+        if len(user_input) > 8 and " " not in user_input:
+            return False
+        # repeated single letters like aaaaaaa or bbbbbbb
+        if len(set(user_input.lower())) == 1:
+            return False
+        
     # reject numbers only like 1234
     if user_input.replace(" ", "").isdigit():
         return False
     
-    # reject gibberish or short characters
+    # reject short pattern
     if len(user_input.strip()) < 2:
         return False
     
@@ -86,7 +97,7 @@ def brainstorm(interests, goal):
     
 if __name__ == "__main__":
     # greeting message
-    print("Welcome to NovaMind — Your AI Brainstorm Assistant 🌟")
+    print("Welcome to NovaMind — Your AI Brainstorm Assistant!")
 
     # loop until the user types exit
     while True:
