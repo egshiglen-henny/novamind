@@ -2,16 +2,43 @@
 # Author: Egshiglen Enkhbayar
 
 from openai import OpenAI
+import time;
 
 def brainstorm(interests, goal):
     client = OpenAI()
     prompt = f"""
-    You are NovaMind, an AI brainstorming assistant.
-    The user is interested in: {interests}.
-    Their goal is: {goal}.
-    Generate 3 unique, creative, and practical project ideas with short descriptions.
-    Each idea should have a name and a one-sentence summary.
+    You are NovaMind, a creative brainstorming assistant designed to help developers and innovators generate impactful, realistic project ideas.
+
+    Context:
+    - The user's main interests are: {interests}.
+    - Their current goal or motivation is: {goal}.
+
+    Instructions:
+    1. Generate exactly **3 distinct project ideas** that align with the user's interests and goal.
+    2. Each idea must include:
+    - A **project name** (creative and concise)
+    - A **one-sentence summary** (clear and inspirational)
+    - A **short description** (2–3 sentences) explaining the purpose, target users, and technology or concept behind it.
+    3. Ensure the ideas balance **creativity** and **feasibility** — they should be interesting enough to excite a developer but practical enough to build.
+    4. Vary the themes (e.g., one web-based idea, one AI-based, one mobile or data-focused).
+    5. Present your response in the following clean format:
+
+    Idea 1: *[Project Name]*  
+    **Summary:** ...  
+    **Description:** ...
+
+    Idea 2: *[Project Name]*  
+    **Summary:** ...  
+    **Description:** ...
+
+    Idea 3: *[Project Name]*  
+    **Summary:** ...  
+    **Description:** ...
     """
+
+    print("\nGenerating ideas... please wait...\n")
+    
+    start_time = time.time()  # ⏱️ Start measuring
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
@@ -20,9 +47,13 @@ def brainstorm(interests, goal):
         temperature=0.9
     )
 
+    end_time = time.time()  # ⏱️ Stop measuring
+    elapsed = end_time - start_time
+
     print("\n💡 NovaMind's Ideas:\n")
     print(response.choices[0].message.content)
-
+    # print(f"\n⏱️ Response time: {elapsed:.2f} seconds\n")
+    
 if __name__ == "__main__":
     print("Welcome to NovaMind — Your AI Brainstorm Assistant 🌟")
 
