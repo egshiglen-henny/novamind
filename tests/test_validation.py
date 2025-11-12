@@ -35,6 +35,15 @@ def test_long_random_word():
     # reject long gibberish strings
     assert validate_input("asdfasdfdsafas") is False
 
+def test_invalid_single_letter_a():
+    assert validate_input("a") is False
+
+def test_valid_single_letter_r():
+    assert validate_input("R") is True
+
+def test_valid_single_letter_c():
+    assert validate_input("C") is True
+
 def test_mixed_case_valid():
     # pass mixed case
     assert validate_input("Web Design") is True

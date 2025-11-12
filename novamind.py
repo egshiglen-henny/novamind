@@ -23,7 +23,7 @@ def validate_input(user_input):
         if len(user_input) > 8 and " " not in user_input:
             return False
         # repeated single letters like aaaaaaa or bbbbbbb
-        if len(set(user_input.lower())) == 1:
+        if len(set(user_input.lower())) == 1 and user_input.strip().upper() not in ["C", "R"]:
             return False
         
     # reject numbers only like 1234
@@ -31,8 +31,9 @@ def validate_input(user_input):
         return False
     
     # reject short pattern
-    if len(user_input.strip()) < 2:
-        return False
+    if len(user_input.strip()) < 2: # pragma: no cover
+        if user_input.strip().upper() not in ["C", "R"]:
+            return False
     
     return True
 
@@ -95,7 +96,7 @@ def brainstorm(interests, goal):
         print(f"Oops! Something went wrong: {e}")
 
     
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     # greeting message
     print("Welcome to NovaMind — Your AI Brainstorm Assistant!")
 
