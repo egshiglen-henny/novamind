@@ -5,6 +5,9 @@
 ![Testing](https://img.shields.io/badge/Testing-Pytest%20%7C%20Pytest--Cov-purple)
 ![Prompt Engineering](https://img.shields.io/badge/AI%20Type-Prompt%20Engineering-orange)
 ![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
+![Build Status](https://github.com/egshiglen-henny/novamind/actions/workflows/python-app.yml/badge.svg)
+![Tests](https://img.shields.io/badge/Tests-100%25%20Passing-blue)
+![Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen)
 
 NovaMind is a **Python-based AI brainstorming assistant** that uses **prompt engineering** and **NLP techniques** to generate diverse, relevant, and realistic project ideas tailored to the user’s interests and goals.
 
@@ -192,3 +195,4 @@ NovaMind demonstrates the integration of **AI-powered idea generation**, **promp
 **Egshiglen Enkhbayar**
 📍 Dublin, Ireland
 🔗 [GitHub](https://github.com/egshiglen-henny)	|	[LinkedIn](https://linkedin.com/in/egshiglene)
+
