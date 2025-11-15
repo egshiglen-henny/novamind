@@ -51,7 +51,7 @@ jobs:
         path: coverage.xml
 
     - name: Create coverage badge
-      if matrix.python-version == '3.12'
+      if: matrix.python-version == '3.12'
       uses: tj-actions/coverage-badge-py@v2
       with:
         output: coverage.svg
