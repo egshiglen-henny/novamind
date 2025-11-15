@@ -86,7 +86,7 @@ def brainstorm(interests, goal):
         elapsed = end_time - start_time
 
         # print(f"\nResponse time: {elapsed:.2f} seconds\n")
-        return response.choices[0].message.content
+        return response["choices"][0]["message"]["content"]
 
     except Exception as e:
         return f"ERROR: {str(e)}"
